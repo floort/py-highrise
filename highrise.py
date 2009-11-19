@@ -160,6 +160,9 @@ class Highrise(object):
 		
 	def put_person(self, xml):
 		xml = self._get_page("/people.xml", "POST", xml)
+		dom = parseString(xml)
+		id = dom.getElementsByTagName("id")[0]
+		return int(id.childNodes[0].data)
 		
 	def get_tags(self):
 		""" Return a dictionary with id:name pairs containing all tags.
@@ -180,7 +183,9 @@ class Highrise(object):
 		"""Attach a tag called name to object of type with id"""
 		xml = self._get_page("/%s/%d/tags.xml" %(type, id), 
 			"POST", "<name>%s</name>" % (name))
-		return xml
+		dom = parseString(xml)
+		id = dom.getElementsByTagName("id")[0]
+		return int(id.childNodes[0].data)
 
 
 
