@@ -29,12 +29,7 @@ class Highrise(object):
 		else:
 			res = http.request(self.base_url + page, method, data,
 				headers = {"content-type":"application/xml"})
-		if res[0]["status"] == "200":
-			return res[1]
-		else:
-			print "HTTP STATUS:", res[0]["status"]
-			return res[1]
-			return False
+		return res[1]
 
 	def _parse_email_address(self, email_address):
 		e = {}
