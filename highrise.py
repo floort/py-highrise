@@ -2,9 +2,7 @@
 
 from xml.dom.minidom import parseString
 import httplib2
-from urllib import quote
 
-import pprint
 
 class Highrise(object):
 	""" Access the Highrise database.
@@ -161,11 +159,7 @@ class Highrise(object):
 		return xml
 		
 	def put_person(self, xml):
-		print "============== XML OUT ================"
-		print xml
 		xml = self._get_page("/people.xml", "POST", xml)
-		print "============== XML IN =================="
-		print xml
 		
 	def get_tags(self):
 		""" Return a dictionary with id:name pairs containing all tags.
@@ -181,7 +175,15 @@ class Highrise(object):
 			name = tag.getElementsByTagName("name")[0]
 			taglist[int(id.childNodes[0].data)] = name.childNodes[0].data
 		return taglist
-	
+
+	def attach_tag(self, type, id, name):
+		"""Attach a tag called name to object of type with id"""
+		xml = self._get_page("/%s/%d/tags.xml" %(type, id), 
+			"POST", "<name>%s</name>" % (name))
+		return xml
+
+
+
 	def get_parties(self, tag_id):
 		
 		parties = []
