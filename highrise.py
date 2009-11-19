@@ -132,20 +132,12 @@ class Highrise(object):
 		xml = "<person>"
 		if kw.has_key("first_name"):
 			xml += self._tags("first-name", kw["first_name"])
-		#else:
-		#	xml += self._tags("first-name")
 		if kw.has_key("last_name"):
 			xml += self._tags("last-name", kw["last_name"])
-		#else:
-		#	xml += self._tags("last-name")
 		if kw.has_key("title"):
 			xml += self._tags("title", kw["title"])
-		#else
-		#	xml += self._tags("title")
 		if kw.has_key("company_name"):
 			xml += self._tags("company-name", kw["company_name"])
-		#else:
-		#	xml += self._tags("company-name")
 		
 		contact = ""
 		if kw.has_key("email_address"):
