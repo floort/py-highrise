@@ -10,7 +10,8 @@ class Highrise(object):
 	""" Access the Highrise database.
 	"""
 	
-	def __init__(self, token):
+	def __init__(self, project, token):
+		self.base_url = "https://%s.highrisehq.com" % (project)
 		self.token = token
 	
 	def __getattr__(self, name):
@@ -26,9 +27,9 @@ class Highrise(object):
 		http = httplib2.Http()
 		http.add_credentials(self.token, "x")
 		if not data:
-			res = http.request(HIGHRISE_BASE_URL + page, method)
+			res = http.request(self.base_url + page, method)
 		else:
-			res = http.request(HIGHRISE_BASE_URL + page, method, data,
+			res = http.request(self.base_url + page, method, data,
 				headers = {"content-type":"application/xml"})
 		if res[0]["status"] == "200":
 			return res[1]
