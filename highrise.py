@@ -217,4 +217,15 @@ class Highrise(object):
 			parties.append(self._parse_person(person))
 		return parties
 
+	def create_membership(self, user_id, group_id):
+		xml = """<membership>
+					<user_id type="integer">%d</user_id>
+					<group_id type="integer">%d</group_id>
+				</membership>""" % (user_id, group_id)
+		res = self._get_page("memberships.xml")
+		if res[0] != "201":
+			return False
+		return True
+
+
 
