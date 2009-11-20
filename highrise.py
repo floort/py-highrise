@@ -44,7 +44,7 @@ class Highrise(object):
 		else:
 			res = http.request(self.base_url + page, method, data,
 				headers = {"content-type":"application/xml"})
-		return res[1]
+		return (res[0]["status"], res[1])
 
 	def _parse_email_address(self, email_address):
 		e = {}
@@ -169,8 +169,10 @@ class Highrise(object):
 		return xml
 		
 	def put_person(self, xml):
-		xml = self._get_page("/people.xml", "POST", xml)
-		dom = parseString(xml)
+		res = self._get_page("/people.xml", "POST", xml)
+		if res[0] != "201":
+			return False # Could not submit data
+		dom = parseString(res[1])
 		id = dom.getElementsByTagName("id")[0]
 		return int(id.childNodes[0].data)
 		
@@ -178,7 +180,10 @@ class Highrise(object):
 		""" Return a dictionary with id:name pairs containing all tags.
 		"""
 		taglist = {}
-		xml = self._get_page("/tags.xml")
+		res = self._get_page("/tags.xml")
+		if res[0] != "200":
+			return False # Could not get tags
+		xml = res[1]
 		if not xml:
 			return False
 		dom = parseString(xml)
@@ -191,9 +196,11 @@ class Highrise(object):
 
 	def attach_tag(self, type, id, name):
 		"""Attach a tag called name to object of type with id"""
-		xml = self._get_page("/%s/%d/tags.xml" %(type, id), 
+		res = self._get_page("/%s/%d/tags.xml" %(type, id), 
 			"POST", "<name>%s</name>" % (name))
-		dom = parseString(xml)
+		if res[0] != "201":
+			return False
+		dom = parseString(res[1])
 		id = dom.getElementsByTagName("id")[0]
 		return int(id.childNodes[0].data)
 
@@ -202,9 +209,10 @@ class Highrise(object):
 	def get_parties(self, tag_id):
 		
 		parties = []
-		xml = self._get_page("/tags/%d.xml" % (int(tag_id)))
-
-		dom = parseString(xml)
+		res = self._get_page("/tags/%d.xml" % (int(tag_id)))
+		if res[0] != "200":
+			return False
+		dom = parseString(res[1])
 		for person in dom.getElementsByTagName("person"):
 			parties.append(self._parse_person(person))
 		return parties
