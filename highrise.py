@@ -222,7 +222,7 @@ class Highrise(object):
 					<user_id type="integer">%d</user_id>
 					<group_id type="integer">%d</group_id>
 				</membership>""" % (user_id, group_id)
-		res = self._get_page("memberships.xml")
+		res = self._get_page("/memberships.xml", "POST", xml)
 		if res[0] != "201":
 			return False
 		return True
