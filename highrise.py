@@ -19,6 +19,30 @@ from xml.dom.minidom import parseString
 import httplib2
 
 
+class Comment(object):
+	def __init__(self, id=False):
+		self.id = None
+		self.parent_id = None
+		self.author_id = None
+		self.created_at = None
+		self.body = None
+		
+		if id:
+			self.load_from_id(id)
+
+	def __unicode__(self):
+		return self.body
+
+	def load_from_id(self, id):
+		pass
+	
+	def save(self):
+		pass
+
+
+
+
+
 class Highrise(object):
 	""" Access the Highrise database.
 	"""
