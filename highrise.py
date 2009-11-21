@@ -176,14 +176,14 @@ class Highrise(object):
 		if kw.has_key("owner_id"):
 			xml += "<owner-id type=\"integer\">%d</owner-id>" % (kw["owner_id"])
 		if kw.has_key("group_id"):
-			xml += "<groupid type=\"integer\">%d</group-id>" % (kw["group_id"])
+			xml += "<group-id type=\"integer\">%d</group-id>" % (kw["group_id"])
 		
 		contact = ""
 		if kw.has_key("email_address"):
-			contact += self._tags("email-adresses", 
+			contact += self._tags("email-addresses", 
 				self._tags("email-address",
 					self._tags("address", kw["email_address"]) + \
-					self._tags("location", "Personal")
+					self._tags("location", "Home")
 				)	
 			)
 		if kw.has_key("phone_number"):
