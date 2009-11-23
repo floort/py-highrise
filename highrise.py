@@ -190,7 +190,7 @@ class Highrise(object):
 			contact += self._tags("phone-numbers", 
 				self._tags("phone-number", 
 					self._tags("number", kw["phone_number"]) + \
-					self._tags("location", "Personal")
+					self._tags("location", "Home")
 				)
 			)
 		if contact:
