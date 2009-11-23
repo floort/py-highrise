@@ -257,5 +257,16 @@ class Highrise(object):
 			return False
 		return True
 
+	def put_note(self, type, id, note):
+		xml = """<note>
+					<body>%s</body>
+					<visible-to>Everyone</visible-to>
+				</note>""" % (note)
+		print xml
+		res = self._get_page("/%s/%d/notes.xml" %(type, id), "POST", xml)
+		if res[0] != "201":
+			print res
+			return False
+		return True
 
 
