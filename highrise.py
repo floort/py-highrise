@@ -198,7 +198,7 @@ class Highrise(object):
 		if kw.has_key("state"):
 			contact += self._tags("addresses",
 				self._tags("address",
-					sefl_tags("state", kw["state"])
+					self._tags("state", kw["state"])
 				)
 			)
 		if contact:
